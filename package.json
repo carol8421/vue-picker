@@ -1,5 +1,5 @@
 {
-  "name": "soul-components",
+  "name": "vue-picker",
   "version": "0.0.1",
   "private": false,
   "main": "lib/soul-components.common.js",
