@@ -1,13 +1,13 @@
 {
-  "name": "vue-picker",
+  "name": "vue-zoe-picker",
   "version": "0.0.1",
   "private": false,
-  "main": "lib/soul-components.common.js",
+  "main": "lib/vue-picker.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lib": "node packages/Icon/src/svg/parse.js && vue-cli-service build --target lib --name soul-components --dest lib packages/index.js"
+    "lib": "vue-cli-service build --target lib --name vue-picker --dest lib packages/index.js"
   },
   "dependencies": {
     "better-scroll": "^1.13.2",

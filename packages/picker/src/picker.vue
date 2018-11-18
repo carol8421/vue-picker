@@ -33,7 +33,7 @@
 import pickerColumn from './picker-column'
 import pickerItem from './picker-item'
 export default {
-  name: 'zoe-picker',
+  name: 'Picker',
   props: {
     options: {
       type: Array,
@@ -119,6 +119,7 @@ export default {
     },
     changeMultiple(row, col) {
       this.selected[col] = row
+      this.$emit('input', this.selected)
     },
     countColumn(options, columns = 0) {
       if (options.length) {

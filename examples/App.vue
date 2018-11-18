@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <zoe-picker 
+    <Picker 
       :options="options" 
       type="cascade" 
       :show.sync="show"
       label="name"
       title="请选择"
       v-model="selected">
-      </zoe-picker>
+      </Picker>
       <div @click="show = true">显示</div>
   </div>
 </template>
