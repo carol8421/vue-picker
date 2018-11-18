@@ -1,16 +1,26 @@
 <template>
-  <div class="zoe-pop">
-    <div class="mask"></div>
-    <div class="zoe-picker">
+  <div class="zoe-pop" v-show="show">
+    <div class="mask" :class="{active: active}" @click="close"></div>
+    <div class="zoe-picker" :class="{active: active}">
       <header>
-        <span class="tit">请选择地址</span>
-        <span class="confirm">确定</span>
+        <span class="tit">{{title}}</span>
+        <span class="confirm" @click="confirm">确定</span>
       </header>
       <div class="wrapper">
         <i class="mask top"></i>
         <i class="mask bottom"></i>
         <template v-if="type === 'cascade'">
-          <picker-column :key="i" v-for="(item, i) in columns" @change="row => change(row, i)" :value="selected[i]" ref="column" :item="item">
+          <picker-column :key="i" v-for="(item, i) in columns" @change="row => changeCascade(row, i)" :value="selected[i]" :item="item" :show="show">
+            <picker-item v-for="(op, j) in item" :key="j" :text="op[label]" :render="render"></picker-item>
+          </picker-column>
+        </template>
+        <template v-if="type === 'normal'">
+          <picker-column @change="changeSingle" :value="current" :item="options" :show="show">
+            <picker-item v-for="(op, j) in options" :key="j" :text="op[label]" :render="render"></picker-item>
+          </picker-column>
+        </template>
+        <template v-if="type === 'multiple'">
+          <picker-column @change="row => changeMultiple(row, i)" :value="selected[i]" :item="item" v-for="(item, i) in options" :show="show">
             <picker-item v-for="(op, j) in item" :key="j" :text="op[label]" :render="render"></picker-item>
           </picker-column>
         </template>
@@ -31,19 +41,45 @@ export default {
         return []
       }
     },
+    title: String,
     render: Function,
     label: String,
     type: {
       type: String,
       default: 'normal'
+    },
+    value: {
+      type: [Array, Number],
+      default: 0
+    },
+    show: {
+      type: Boolean,
+      default: false
     }
   },
   watch: {
     options: {
       immediate: true,
       handler() {
-        this.parseOptions()
+        if (this.type === 'cascade') {
+          this.parseOptions()
+        } else if (this.type === 'multiple') {
+          this.selected = this.value
+        }
       }
+    },
+    value: {
+      immediate: true,
+      handler(v) {
+        this.current = v
+      }
+    },
+    show(v) {
+      if (v) {
+        setTimeout(() => {
+          this.active = v
+        }, 50);
+      }     
     }
   },
   components: {
@@ -54,11 +90,36 @@ export default {
     return {
       index: 0,
       selected: [],
-      columns: []
+      columns: [],
+      active: false,
+      // 单列选择时索引
+      current: 0
     }
   },
 
   methods: {
+    close() {
+      this.active = false
+      setTimeout(() => {
+        this.$emit('update:show', false)
+      }, 300)
+    },
+    confirm() {
+      if (this.type === 'normal') {
+        this.$emit('input', this.current)
+        this.$emit('change', this.current)
+      } else {
+        this.$emit('input', this.selected)
+        this.$emit('change', this.selected)
+      }
+      this.close()
+    },
+    changeSingle() {
+      this.$emit('input', this.current)
+    },
+    changeMultiple(row, col) {
+      this.selected[col] = row
+    },
     countColumn(options, columns = 0) {
       if (options.length) {
         columns++
@@ -88,13 +149,13 @@ export default {
       const count = this.countColumn(this.options)
       let i = count
       while(i--) {
-        this.selected[i] = 0
+        this.selected[i] = this.value ? this.value[i] : 0
       }
       if (count > 0) {
         this.columns = this.formateColumns(this.options)
       }
     },
-    change(row, col) {
+    changeCascade(row, col) {
       this.selected.forEach((item, i) => {
         if (i === col) {
           this.selected[i] = row
@@ -123,6 +184,11 @@ export default {
       width:100%;
       height:100%;
       background: rgba(0, 0, 0, .6);
+      opacity: 0;
+      transition: .3s;
+      &.active{
+        opacity: 1;
+      }
     }
   }
   .zoe-picker{
@@ -133,6 +199,11 @@ export default {
     left:0;
     width:100%;
     height:300px;
+    transform: translate3d(0, 300px, 0);
+    transition: .3s;
+    &.active{
+      transform: translate3d(0, 0, 0);
+    }
     header{
       height:50px;
       border-bottom: 1px solid $border;

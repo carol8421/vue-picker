@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <zoe-picker :options="options" type="cascade" @change="change" label="name" :render="render"></zoe-picker>
+    <zoe-picker 
+      :options="options" 
+      type="cascade" 
+      :show.sync="show"
+      label="name"
+      title="请选择"
+      v-model="selected">
+      </zoe-picker>
+      <div @click="show = true">显示</div>
   </div>
 </template>
 
@@ -10,7 +18,56 @@ export default {
   name: 'app',
   data() {
     return {
-      options: []
+      options: [],
+      current: 0,
+      show: false,
+      optionsSingle: [
+        {
+          name: '苹果'
+        },
+        {
+          name: '华为'
+        },
+        {
+          name: 'oppo'
+        }
+      ],
+      selected: [2, 0, 2],
+      optionsMultiple: [
+        [
+          {
+            label: '诺基亚'
+          },
+          {
+            label: '苹果'
+          },
+          {
+            label: '安卓'
+          }
+        ],
+        [
+          {
+            label: '25岁'
+          },
+          {
+            label: '26岁'
+          },
+          {
+            label: '27岁'
+          }
+        ],
+        [
+          {
+            label: '跑步'
+          },
+          {
+            label: '游泳'
+          },
+          {
+            label: '健身'
+          }
+        ]
+      ]
     }
   },
   methods: {

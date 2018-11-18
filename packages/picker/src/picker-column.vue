@@ -16,7 +16,13 @@ export default {
       type: Number,
       default: 0
     },
-    item: Array
+    item: Array,
+    show: Boolean
+  },
+  data() {
+    return {
+      active: false
+    }
   },
   watch: {
     value: {
@@ -24,14 +30,15 @@ export default {
         this.scroll.wheelTo(v)
       }
     },
-    item: {
-      immediate: true,
-      handler(v) {
-        if (this.scroll) {
-          this.scroll.refresh()
-        } else {
-          this.init()
-        }
+    show(v) {
+      if (v) {
+        setTimeout(() => {
+          if (this.scroll) {
+            this.scroll.refresh()
+          } else {
+            this.init()
+          }
+        }, 50); 
       }
     }
   },
@@ -49,7 +56,7 @@ export default {
         this.scroll = new BScroll(this.$refs.column, {
           deceleration: 0.002,
           wheel: {
-            selectedIndex: 0,
+            selectedIndex: this.value,
             rotate: 15,
             adjustTime: 400,
             wheelWrapperClass: 'zoe-picker-column',
@@ -81,12 +88,5 @@ export default {
     padding:0;
     list-style: none;
     // padding:105px 0;
-  }
-  .zoe-picker-item{
-    font-size: 20px;
-    color:$text;
-    line-height: 40px;
-    height:40px;
-    @include st(1);
   }
 </style>

@@ -30,8 +30,8 @@ export default {
   .zoe-picker-item{
     font-size: 16px;
     color:$text;
-    height:40px;
     line-height: 40px;
+    height:40px;
     @include st(1);
   }
 </style>
