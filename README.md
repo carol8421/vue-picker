@@ -1,5 +1,5 @@
 # vue-picker
-## 通用的移动端picker组件 支持单列 多列 多列级联选择 基于better-scroll
+## 通用的移动端picker组件 支持单列 多列 多列级联选择 基于better-scroll
 ### 使用
 ``` sh
   npm install vue-zoe-picker and yarn add vue-zoe-picker
@@ -52,10 +52,10 @@ export default {
               name: '北京市',
               children: [
                 {
-                  name: '朝阳区
+                  name: '朝阳区'
                 },
                 {
-                  name: '东城区
+                  name: '东城区'
                 }
               ]
             }
