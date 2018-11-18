@@ -1,6 +1,6 @@
 {
   "name": "vue-zoe-picker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "main": "lib/vue-picker.common.js",
   "scripts": {
