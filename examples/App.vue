@@ -15,6 +15,7 @@
 <script>
 import cities from './cities.json'
 export default {
+  components: {Picker: picker},
   name: 'app',
   data() {
     return {

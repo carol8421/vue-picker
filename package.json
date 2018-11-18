@@ -1,6 +1,6 @@
 {
   "name": "vue-zoe-picker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "main": "lib/vue-picker.common.js",
   "scripts": {
@@ -9,9 +9,14 @@
     "test:unit": "vue-cli-service test:unit",
     "lib": "vue-cli-service build --target lib --name vue-picker --dest lib packages/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hj2060/vue-picker"
+  },
   "dependencies": {
     "better-scroll": "^1.13.2",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-zoe-picker": "^0.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
